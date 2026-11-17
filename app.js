@@ -8,7 +8,7 @@
 //    5. Llena el formulario (Application URL: http://localhost, Summary: "Proyecto escolar")
 //    6. Copia tu "API Key (v3 auth)" y pégala aquí abajo 👇
 
-const API_KEY = "TU_API_KEY_AQUI";
+const API_KEY = "d909cf9bf5670a8248c3fd65cfa7ffd3";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_URL = "https://image.tmdb.org/t/p/w300";
 
