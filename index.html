@@ -3,33 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buscador de Películas</title>
+  <title>Buscador de Peliculas</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="container">
+
+    <!-- Encabezado de la pagina con el titulo y una descripcion -->
     <header>
-      <h1>🎬 Buscador de Películas</h1>
-      <p class="subtitle">Busca información sobre tus películas favoritas</p>
+      <h1>Buscador de Peliculas</h1>
+      <p class="subtitle">Busca informacion sobre tus peliculas favoritas</p>
     </header>
 
+    <!-- Aqui va el campo de texto y el boton para buscar -->
     <div class="search-box">
       <input
         type="text"
         id="searchInput"
-        placeholder="Escribe el nombre de una película..."
+        placeholder="Escribe el nombre de una pelicula..."
         autocomplete="off"
       />
       <button id="searchBtn">Buscar</button>
     </div>
 
+    <!-- Este div se muestra mientras se estan cargando los resultados -->
     <div id="loading" class="loading hidden">
       <div class="spinner"></div>
-      <p>Buscando películas...</p>
+      <p>Buscando peliculas...</p>
     </div>
 
+    <!-- Aqui se muestran los mensajes de error si algo sale mal -->
     <div id="error" class="error hidden"></div>
 
+    <!-- En este contenedor se van a mostrar las tarjetas de las peliculas -->
     <div id="results" class="results"></div>
   </div>
 

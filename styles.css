@@ -1,10 +1,11 @@
-/* ===== Reset y Base ===== */
+/* Reset basico para que todos los navegadores se vean igual */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Estilos generales del body, le pongo un fondo oscuro con degradado */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
@@ -12,19 +13,20 @@ body {
   min-height: 100vh;
 }
 
-/* ===== Contenedor Principal ===== */
+/* Contenedor principal, lo centro y le doy un ancho maximo para que no se estire mucho */
 .container {
   max-width: 900px;
   margin: 0 auto;
   padding: 40px 20px;
 }
 
-/* ===== Header ===== */
+/* Estilos del encabezado */
 header {
   text-align: center;
   margin-bottom: 40px;
 }
 
+/* El titulo le pongo un degradado de color para que se vea mas llamativo */
 header h1 {
   font-size: 2.5rem;
   margin-bottom: 8px;
@@ -34,18 +36,20 @@ header h1 {
   -webkit-text-fill-color: transparent;
 }
 
+/* Subtitulo debajo del titulo principal */
 .subtitle {
   font-size: 1.1rem;
   color: #aaa;
 }
 
-/* ===== Barra de Búsqueda ===== */
+/* La barra de busqueda, uso flexbox para que el input y el boton queden lado a lado */
 .search-box {
   display: flex;
   gap: 12px;
   margin-bottom: 30px;
 }
 
+/* Estilos del campo de texto donde el usuario escribe */
 .search-box input {
   flex: 1;
   padding: 14px 20px;
@@ -58,14 +62,17 @@ header h1 {
   transition: border-color 0.3s;
 }
 
+/* Cuando el usuario da clic en el input cambio el color del borde */
 .search-box input:focus {
   border-color: #e94560;
 }
 
+/* Color del texto placeholder */
 .search-box input::placeholder {
   color: #666;
 }
 
+/* Estilos del boton de buscar */
 .search-box button {
   padding: 14px 30px;
   font-size: 1rem;
@@ -78,21 +85,24 @@ header h1 {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Efecto hover del boton, lo subo un poco y le pongo sombra */
 .search-box button:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(233, 69, 96, 0.4);
 }
 
+/* Cuando haces clic el boton regresa a su posicion normal */
 .search-box button:active {
   transform: translateY(0);
 }
 
-/* ===== Loading ===== */
+/* Contenedor del loading que aparece mientras se busca */
 .loading {
   text-align: center;
   padding: 40px;
 }
 
+/* Spinner animado de carga, es un circulo que gira */
 .spinner {
   width: 40px;
   height: 40px;
@@ -103,11 +113,12 @@ header h1 {
   margin: 0 auto 12px;
 }
 
+/* Animacion del spinner, simplemente lo hago girar 360 grados */
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* ===== Mensajes de Error ===== */
+/* Estilo de los mensajes de error, fondo rojizo para que se note */
 .error {
   text-align: center;
   padding: 20px;
@@ -119,12 +130,13 @@ header h1 {
   margin-bottom: 20px;
 }
 
-/* ===== Resultados ===== */
+/* Contenedor de los resultados, uso grid para que se acomoden las tarjetas */
 .results {
   display: grid;
   gap: 20px;
 }
 
+/* Cada tarjeta de pelicula usa flexbox para poner el poster a la izquierda y la info a la derecha */
 .movie-card {
   display: flex;
   gap: 20px;
@@ -135,11 +147,13 @@ header h1 {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* Efecto hover en las tarjetas, se levantan un poco */
 .movie-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
+/* Imagen del poster de la pelicula */
 .movie-card img {
   width: 150px;
   min-height: 220px;
@@ -148,6 +162,7 @@ header h1 {
   background: #222;
 }
 
+/* Contenedor de la informacion de la pelicula (titulo, ano, sinopsis) */
 .movie-info {
   flex: 1;
   display: flex;
@@ -155,11 +170,13 @@ header h1 {
   gap: 10px;
 }
 
+/* Titulo de la pelicula */
 .movie-info h2 {
   font-size: 1.4rem;
   color: #fff;
 }
 
+/* Etiqueta del ano de lanzamiento, le doy forma de pastilla */
 .movie-year {
   display: inline-block;
   background: #e94560;
@@ -171,12 +188,14 @@ header h1 {
   width: fit-content;
 }
 
+/* Texto de la sinopsis */
 .movie-plot {
   color: #ccc;
   line-height: 1.6;
   font-size: 0.95rem;
 }
 
+/* Placeholder para cuando no hay imagen del poster */
 .no-poster {
   display: flex;
   align-items: center;
@@ -190,21 +209,23 @@ header h1 {
   text-align: center;
 }
 
-/* ===== Utilidades ===== */
+/* Clase para ocultar elementos */
 .hidden {
   display: none;
 }
 
-/* ===== Responsive ===== */
+/* Estilos responsive para que se vea bien en celulares */
 @media (max-width: 600px) {
   header h1 {
     font-size: 1.8rem;
   }
 
+  /* En pantallas chicas pongo el input y boton uno debajo del otro */
   .search-box {
     flex-direction: column;
   }
 
+  /* Las tarjetas tambien las pongo en columna y centro el contenido */
   .movie-card {
     flex-direction: column;
     align-items: center;
