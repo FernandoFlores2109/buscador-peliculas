@@ -1,8 +1,16 @@
 // ===== Configuración de la API =====
-// OMDB API - API pública de películas (https://www.omdbapi.com/)
-// API Key gratuita para uso educativo
-const API_KEY = "4a3b711b";
-const API_URL = "https://www.omdbapi.com/";
+// TMDB API - The Movie Database (https://www.themoviedb.org/)
+// ⚠️ INSTRUCCIONES PARA OBTENER TU API KEY GRATIS:
+//    1. Ve a https://www.themoviedb.org/ y crea una cuenta gratuita
+//    2. Verifica tu correo electrónico
+//    3. Ve a tu perfil → Configuración → API
+//    4. Haz clic en "Solicitar una clave de API" → opción "Developer"
+//    5. Llena el formulario (Application URL: http://localhost, Summary: "Proyecto escolar")
+//    6. Copia tu "API Key (v3 auth)" y pégala aquí abajo 👇
+
+const API_KEY = "TU_API_KEY_AQUI";
+const BASE_URL = "https://api.themoviedb.org/3";
+const IMG_URL = "https://image.tmdb.org/t/p/w300";
 
 // ===== Referencias al DOM =====
 const searchInput = document.getElementById("searchInput");
@@ -33,13 +41,19 @@ function handleSearch() {
     return;
   }
 
+  // Verificar que la API Key esté configurada
+  if (API_KEY === "TU_API_KEY_AQUI") {
+    showError("⚠️ Debes configurar tu API Key de TMDB en el archivo app.js. Revisa las instrucciones al inicio del archivo.");
+    return;
+  }
+
   // Limpiar resultados anteriores y mostrar loading
   clearResults();
   hideError();
   showLoading();
 
   // Construir la URL de la API con el nombre de la película
-  const url = `${API_URL}?apikey=${API_KEY}&s=${encodeURIComponent(query)}&type=movie`;
+  const url = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}&language=es-ES&page=1`;
 
   // Realizar la solicitud con fetch()
   fetch(url)
@@ -55,42 +69,19 @@ function handleSearch() {
       hideLoading();
 
       // Verificar si la API encontró resultados
-      if (data.Response === "False") {
+      if (data.results.length === 0) {
         showError("🎥 Película no encontrada. Intenta con otro nombre.");
         return;
       }
 
-      // Obtener los detalles de cada película encontrada
-      fetchMovieDetails(data.Search);
+      // Mostrar las películas encontradas (máximo 6)
+      const movies = data.results.slice(0, 6);
+      displayMovies(movies);
     })
     .catch(function (error) {
       hideLoading();
       showError("⚠️ Error de conexión. Verifica tu conexión a internet e intenta de nuevo.");
       console.error("Error en fetch:", error);
-    });
-}
-
-// ===== Obtener detalles de cada película =====
-function fetchMovieDetails(movies) {
-  // Limitar a 6 resultados para no saturar la página
-  const moviesToShow = movies.slice(0, 6);
-
-  // Crear una solicitud fetch por cada película para obtener su sinopsis
-  const detailPromises = moviesToShow.map(function (movie) {
-    const detailUrl = `${API_URL}?apikey=${API_KEY}&i=${movie.imdbID}&plot=short`;
-    return fetch(detailUrl).then(function (res) {
-      return res.json();
-    });
-  });
-
-  // Esperar a que todas las solicitudes terminen
-  Promise.all(detailPromises)
-    .then(function (detailedMovies) {
-      displayMovies(detailedMovies);
-    })
-    .catch(function (error) {
-      showError("⚠️ Error al obtener los detalles de las películas.");
-      console.error("Error en detalles:", error);
     });
 }
 
@@ -102,18 +93,27 @@ function displayMovies(movies) {
     card.className = "movie-card";
 
     // Verificar si tiene póster disponible
-    const posterHTML =
-      movie.Poster && movie.Poster !== "N/A"
-        ? `<img src="${movie.Poster}" alt="Póster de ${movie.Title}">`
-        : `<div class="no-poster">📷 Sin imagen</div>`;
+    const posterHTML = movie.poster_path
+      ? `<img src="${IMG_URL}${movie.poster_path}" alt="Póster de ${movie.title}">`
+      : `<div class="no-poster">📷 Sin imagen</div>`;
+
+    // Extraer el año de la fecha de lanzamiento
+    const year = movie.release_date
+      ? movie.release_date.split("-")[0]
+      : "Año desconocido";
+
+    // Obtener la sinopsis
+    const plot = movie.overview
+      ? movie.overview
+      : "Sinopsis no disponible.";
 
     // Construir el contenido HTML de la tarjeta
     card.innerHTML = `
       ${posterHTML}
       <div class="movie-info">
-        <h2>${movie.Title}</h2>
-        <span class="movie-year">📅 ${movie.Year}</span>
-        <p class="movie-plot">${movie.Plot !== "N/A" ? movie.Plot : "Sinopsis no disponible."}</p>
+        <h2>${movie.title}</h2>
+        <span class="movie-year">📅 ${year}</span>
+        <p class="movie-plot">${plot}</p>
       </div>
     `;
 
